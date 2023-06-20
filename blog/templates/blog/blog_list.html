@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+{% load extra_filter %}
+{% block content %}
+    <diov class="col-12">
+        <a href="{% url 'blog:blog_create' %}" class="btn btn-sm btn-outline-secondary m-1">Create new blog></a>
+    </diov>
+    {% for object in object_list %}
+        <div class="col-md-3">
+            <div class="card mb-4 box-shadow m-1">
+                <img class="card-img-top">
+                <img src="/media/images/blog.png" class="img-fluid" alt="Responsive image">
+                <div class="card-body">
+                    <p class="card-text">{{ object|capfirst|truncatechars:100 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{% url 'blog:blogs_item' object.pk %}" class="btn btn-sm btn-outline-secondary m-1">View</a>
+                            <a href="{% url 'blog:blog_update' object.pk %}" class="btn btn-sm btn-outline-secondary m-1">Edit</a>
+                            <a href="{% url 'blog:blog_delete' object.pk %}" class="btn btn-sm btn-outline-secondary m-1">Delete</a>
+{#                            </button>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'catalog/base.html' %}
+{#{% load extra_filter %}#}
+{% block content %}
+    <div class="row">
+        <div class="card mb-5">
+{#            <div class="card-body">#}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-success" value="{% if object %}Update{% else %}Save{% endif %}">
+                     <a href="{% url 'blog:blogs' %}" class="btn btn-primary">Back</a>
+                </form>
+{#            </div>#}
+        </div>
+    </div>
+ {% endblock %}

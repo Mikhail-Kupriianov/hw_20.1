@@ -1,0 +1,19 @@
+{% extends 'catalog/base.html' %}
+{#{% load extra_filter %}#}
+{% block content %}
+    <div class="row">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p>{{ object.blog_content|linebreaks }}</p><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="card-footer">
+        <a href="{% url 'blog:blogs' %}" class="btn btn-sm btn-outline-secondary">Back</a>
+    </div>
+    {{ object.inc }}
+{% endblock %}
