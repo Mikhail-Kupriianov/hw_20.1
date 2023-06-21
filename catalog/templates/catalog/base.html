@@ -39,13 +39,13 @@
 
 <main role="main">
 
-    <section class="jumbotron text-center">
-        <div class="container">
+{#    <section class="jumbotron text-center">#}
+        <div class="text-center">
             <h1 class="jumbotron-heading">{{ title }}</h1>
         </div>
-    </section>
+{#    </section>#}
 
-    <div class="album py-5 bg-light">
+    <div class="album py-1 bg-light">
         <div class="container">
 
             <div class="row">
@@ -63,7 +63,7 @@
                         {% for p in paginator.page_range %}
                             {% if page_obj.number == p %}
                                 <li class="page-item active" aria-current="page">
-                                    <a class="p-md-3">{{ p }}</a>
+                                    <a class="page-link">{{ p }}</a>
                                 </li>
                             {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
                                 <a class="page-link" href="?page={{ p }}">{{ p }}</a>
