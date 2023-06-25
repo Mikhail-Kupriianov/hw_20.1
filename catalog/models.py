@@ -37,9 +37,9 @@ class Product(models.Model):
 
 class Version(models.Model):
     version_product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    version_number = models.IntegerField()
-    version_name = models.CharField(max_length=100)
-    version_is_active = models.BooleanField(default=False)
+    version_number = models.IntegerField(verbose_name='номер версии')
+    version_name = models.CharField(max_length=100, verbose_name='название версии')
+    version_is_active = models.BooleanField(default=False, verbose_name='активная версия')
 
     def __str__(self):
         return f"{self.version_name} v.{self.version_number}"
