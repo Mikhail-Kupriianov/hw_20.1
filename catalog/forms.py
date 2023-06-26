@@ -47,8 +47,14 @@ class ProductVersionForm(StyleFormMixin, forms.ModelForm):
         model = Version
         fields = '__all__'
 
-    def clean(self):
-        super().clean()
-        count = 0
-        for item in self.fields:
-            print(type(item))
+    def clean_is_active(self):
+        """
+        нельзя добавить более одной активной версии
+        """
+        is_active = self.cleaned_data['is_active']
+        print(is_active)
+        # product = self.cleaned_data['product']
+        if self.instance.product:
+            if is_active and self.instance.product.version_set.filter(is_active=True).exclude(id=self.instance.id).exists():
+                raise forms.ValidationError('Нельзя добавить более одной активной версии')
+        return is_active
