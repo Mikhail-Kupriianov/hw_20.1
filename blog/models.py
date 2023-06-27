@@ -4,7 +4,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
-NULLABLE = {'null': True, 'blank': True}
+from catalog.models import NULLABLE
 
 
 class Blog(models.Model):
@@ -32,4 +32,3 @@ class Blog(models.Model):
         verbose_name = 'блог'
         verbose_name_plural = 'блоги'
         ordering = ('blog_title',)
-
