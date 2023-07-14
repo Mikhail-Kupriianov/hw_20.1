@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -63,6 +65,8 @@ def contact(request):
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         message = request.POST.get('message')
+        send_mail(f'You have new message from {name}({phone})', message,
+                  settings.EMAIL_HOST_USER, ['p13p@yandex.ru'])
         print(f'You have new message from {name}({phone}): {message}')
     context = {
         'title': 'Контакты'

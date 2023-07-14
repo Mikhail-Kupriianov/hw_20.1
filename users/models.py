@@ -5,8 +5,9 @@ from catalog.models import NULLABLE
 
 
 class User(AbstractUser):
-    username = None
+    # username = None
     email = models.EmailField(unique=True, verbose_name='почта')
+    email_verify = models.BooleanField(default=False)
 
     phone = models.CharField(max_length=35, verbose_name='телефон', **NULLABLE)
     avatar = models.ImageField(upload_to='users/', verbose_name='аватар', **NULLABLE)
