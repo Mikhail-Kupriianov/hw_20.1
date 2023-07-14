@@ -25,3 +25,4 @@ def send_email_for_verify(request, user):
         to=[user.email],
     )
     email.send()
+    print(message)
