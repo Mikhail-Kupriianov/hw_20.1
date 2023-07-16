@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
 from django.core.exceptions import ValidationError
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -8,7 +9,9 @@ from django.utils.http import urlsafe_base64_decode
 from django.views import View
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.tokens import default_token_generator as token_generator
-from users.forms import UserRegisterForm, UserProfileForm, AuthenticationForm
+
+from config.settings import EMAIL_HOST_USER
+from users.forms import UserRegisterForm, UserProfileForm, AuthenticationForm, UserRecoveryForm
 from users.models import User
 from users.utils import send_email_for_verify
 
@@ -70,3 +73,23 @@ class EmailVerify(View):
                 User.DoesNotExist, ValidationError):
             user = None
         return user
+
+
+class PasswordRecoveryView(PasswordResetView):
+    template_name = 'users/restore_pass.html'
+    # subject_template_name = _(subject_template_name),
+    email_template_name = 'users/reset_email.html',
+    success_url = reverse_lazy('users:login')
+    from_email = EMAIL_HOST_USER
+    form_class = UserRecoveryForm
+
+    # def get_initial(self):
+    #     initials = super().get_initial()
+    #     initials['user'] = User.objects.get(email=self.request.user)
+    #     return initials
+
+
+class PasswordResetView(PasswordResetConfirmView):
+    post_reset_login = True
+    template_name = "users/password_reset_confirm.html"
+    success_url = reverse_lazy('users:login')

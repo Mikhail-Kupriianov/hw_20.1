@@ -11,15 +11,16 @@
                     </h3>
                 </div>
                 <div class="card-body">
-{#                    <div class="row">#}
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <input type="submit" class="btn btn-success"
-                               value="Войти">
-                        <a href="{% url 'catalog:index' %}" class="btn btn-primary">Back</a>
-                    </div>
+                    {#                    <div class="row">#}
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-success"
+                           value="Войти">
+                    <a href="{% url 'catalog:index' %}" class="btn btn-primary">Back</a>
+                    <a href="{% url 'users:recovery' %}" class="link-dark">Забыли пароль?</a>
                 </div>
             </div>
-        </form>
+    </div>
+    </form>
     </div>
 {% endblock %}
