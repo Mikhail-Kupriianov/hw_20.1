@@ -1,6 +1,8 @@
 import datetime
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'null': True, 'blank': True}
 
 
@@ -18,6 +20,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    version_user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь')
     product_name = models.CharField(max_length=100, verbose_name='наименование')
     product_description = models.TextField(verbose_name='описание')
     product_preview = models.ImageField(upload_to='product/', verbose_name='изображение', **NULLABLE)

@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 from catalog.forms import ProductForm, ProductVersionForm
 from catalog.models import Product, Version
+from users.models import User
 
 
 class ProductListView(ListView):
@@ -28,7 +29,13 @@ class ProductDetailView(DetailView):
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
+    # version_user = self.request.user
     success_url = reverse_lazy('catalog:index')
+
+    def get_initial(self):
+        initials = super().get_initial()
+        initials['version_user'] = User.objects.get(email=self.request.user)
+        return initials
 
 
 class ProductDeleteView(DeleteView):

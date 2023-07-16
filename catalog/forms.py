@@ -21,7 +21,12 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         model = Product
         # fields = '__all__'
         # # fields = ('product_name', 'product_description', 'product_cost',)
+        # exclude = ('product_data_created',)
         exclude = ('product_data_created', 'product_last_data_change',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['version_user'].widget = forms.HiddenInput()
 
     def clean_product_name(self):
         clean_data = self.cleaned_data['product_name']
