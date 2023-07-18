@@ -52,8 +52,8 @@ class ProductVersionForm(StyleFormMixin, forms.ModelForm):
         model = Version
         fields = '__all__'
 
-    def clean(self):
-        super().clean()
-        count = 0
-        for item in self.fields:
-            print(type(item))
+    def clean_version_is_active(self):
+        version_is_active = self.cleaned_data.get('version_is_active')
+        product = self.cleaned_data.get('version_product')
+        Version.objects.filter(version_product=product).exclude(id=self.instance.id).update(version_is_active=False)
+        return version_is_active
