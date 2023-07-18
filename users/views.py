@@ -42,7 +42,7 @@ class RegisterView(CreateView):
         return render(request, self.template_name, context)
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')

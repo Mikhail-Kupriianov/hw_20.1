@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.forms import inlineformset_factory
 from django.shortcuts import render
@@ -9,15 +10,20 @@ from catalog.models import Product, Version
 from users.models import User
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     paginate_by = 4
     model = Product
     extra_context = {
         'title': 'Главная'
     }
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(product_is_publicated=True)
+        return queryset
 
-class ProductDetailView(DetailView):
+
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
 
     def get_context_data(self, **kwargs):
@@ -26,7 +32,7 @@ class ProductDetailView(DetailView):
         return context_data
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     # version_user = self.request.user
@@ -38,12 +44,12 @@ class ProductCreateView(CreateView):
         return initials
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:index')
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:index')

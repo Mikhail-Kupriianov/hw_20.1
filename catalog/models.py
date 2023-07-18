@@ -28,6 +28,7 @@ class Product(models.Model):
     product_cost = models.FloatField(verbose_name='цена')
     product_data_created = models.DateField(verbose_name='создан', default=datetime.date.today)
     product_last_data_change = models.DateField(verbose_name='последнее изменение', default=datetime.date.today)
+    product_is_publicated = models.BooleanField(verbose_name='опубликован', default=False)
 
     def __str__(self):
         return f"{self.product_name} * {self.product_cost}"
@@ -36,6 +37,20 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         ordering = ('product_name',)
+        permissions = [
+            (
+                'product_is_publicated',
+                'Can publish product'
+            ),
+            (
+                'product_description',
+                'Can edit description'
+            ),
+            (
+                'product_category',
+                'Can change category'
+            )
+        ]
 
 
 class Version(models.Model):

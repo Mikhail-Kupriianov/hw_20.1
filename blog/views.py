@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 
@@ -6,7 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from blog.models import Blog
 
 
-class BlogListView(ListView):
+class BlogListView(LoginRequiredMixin, ListView):
     paginate_by = 4
     model = Blog
     extra_context = {
@@ -19,7 +20,7 @@ class BlogListView(ListView):
         return queryset
 
 
-class BlogDetailView(DetailView):
+class BlogDetailView(LoginRequiredMixin, DetailView):
     model = Blog
 
     def get_context_data(self, **kwargs):
@@ -36,13 +37,13 @@ class BlogDetailView(DetailView):
         return post
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     fields = ('blog_title', 'blog_content',)
     success_url = reverse_lazy('blog:blogs')
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
     fields = ('blog_title', 'blog_content', 'blog_preview', 'blog_is_publicated')
 
@@ -50,6 +51,6 @@ class BlogUpdateView(UpdateView):
         return reverse('blog:blogs_item', kwargs={'pk': self.object.pk})
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:blogs')

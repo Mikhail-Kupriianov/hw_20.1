@@ -12,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('pk', 'product_name', 'product_cost', 'product_category',)
-    list_filter = ('product_category',)
+    list_filter = ('product_category', 'product_is_publicated')
     search_fields = ('product_name', 'product_description',)
 
 
