@@ -8,7 +8,11 @@
         <div class="col-md-3">
             <div class="card mb-4 box-shadow m-1">
                 <img class="card-img-top">
-                <img src="/media/images/blog.png" class="img-fluid" alt="Responsive image">
+                {% if object.blog_preview %}
+                    <img src="/media/{{ object.blog_preview }}" class="img-fluid" alt="Responsive image">
+                {% else %}
+                    <img src="{% media_path 'blog.png' %}">
+                {% endif %}
                 <div class="card-body">
                     <p class="card-text">{{ object|capfirst|truncatechars:100 }}</p>
                     <div class="d-flex justify-content-between align-items-center">
